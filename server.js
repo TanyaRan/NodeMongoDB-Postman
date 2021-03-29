@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
-const error = require('./middleware/error');
+// const error = require('./middleware/error');
+const errorHandler = require('./middleware/error');
 const connectDb = require('./config/db');
 
 // Load env vars
@@ -13,7 +14,7 @@ connectDb();
 
 // Route files
 const bootcamps = require('./routes/bootcampsRouter');
-const errorHandler = require('./middleware/error');
+const courses = require('./routes/coursesRouter');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 app.use(errorHandler);
 
