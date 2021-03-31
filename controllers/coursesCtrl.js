@@ -9,7 +9,7 @@ const Bootcamp = require('../models/Bootcamp');
 // @access  Public
 exports.getCourses = asyncHandler(async (req, res, next) => {
   if (req.params.bootcampId) {
-    const courses = Course.find({ bootcamp: req.params.bootcampId });
+    const courses = await Course.find({ bootcamp: req.params.bootcampId });
 
     return res.status(200).json({
       success: true,
@@ -25,7 +25,7 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/courses/:id
 // @access  Public
 exports.getCourse = asyncHandler(async (req, res, next) => {
-  const course = await (await Course.findById(req.params.id)).populate({
+  const course = await Course.findById(req.params.id).populate({
     path: 'bootcamp',
     select: 'name description'
   });

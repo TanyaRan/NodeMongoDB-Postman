@@ -3,6 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const connectDb = require('./config/db');
 
@@ -16,11 +17,15 @@ connectDb();
 // Route files
 const bootcamps = require('./routes/bootcampsRouter');
 const courses = require('./routes/coursesRouter');
+const auth = require('./routes/authRouter');
 
 const app = express();
 
 // Body parser
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 // File uploading
 app.use(fileUpload());
@@ -31,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 
