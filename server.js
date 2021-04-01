@@ -18,6 +18,7 @@ connectDb();
 const bootcamps = require('./routes/bootcampsRouter');
 const courses = require('./routes/coursesRouter');
 const auth = require('./routes/authRouter');
+const users = require('./routes/userRouter');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
 
 app.use(errorHandler);
 
@@ -49,6 +51,7 @@ const server = app.listen(PORT, () => {
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`.red);
+
   // Close server & exit process
   server.close(() => process.exit(1));
 });
